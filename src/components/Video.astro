@@ -1,0 +1,36 @@
+---
+const ytApiKey = import.meta.env.YT_API_KEY
+const ytChannelId = import.meta.env.YT_CHANNEL_ID
+
+const response = await fetch(
+  `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${ytChannelId}&maxResults=4&order=date&type=video&key=${ytApiKey}`
+)
+const videos = await response.json()
+---
+
+<div
+  class='max-w-[85rem] px-4 py-10 sm:px-20 lg:px-40 lg:py-14 mx-auto'
+  id='video'
+>
+  <h1 class='mb-12 font-bold text-3xl'>
+    04. Some latest videos from my YoutTube channel
+  </h1>
+
+  <!-- Grid -->
+  <div class='grid lg:grid-cols-2 lg:gap-y-16 gap-10'>
+    {
+      videos?.items?.map((video) => (
+        <div class='shadow-xl shadow-gray-200 rounded-xl p-4'>
+          <div class='aspect-w-16 aspect-h-9'>
+            <iframe
+              src={`https://youtube.com/embed/${video.id.videoId}`}
+              allowfullscreen
+              class='w-full h-full'
+            />
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <!-- End Grid -->
+</div>
