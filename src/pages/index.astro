@@ -2,10 +2,14 @@
 import About from '../components/About.astro'
 import Contact from '../components/Contact.astro'
 import Experience from '../components/Experience.astro'
+import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
 import Hero from '../components/Hero.astro'
 import Project from '../components/Project.astro'
 import Video from '../components/Video.astro'
+
+const ytApiKey = import.meta.env.YT_API_KEY
+const ytChannelId = import.meta.env.YT_CHANNEL_ID
 ---
 
 <html lang='en'>
@@ -23,8 +27,15 @@ import Video from '../components/Video.astro'
       <About />
       <Experience />
       <Project />
+      <!--
+        Don't using the react Video component because of limitted youtube data api quota.
+        Since astro makes request on build time, for now I'm using that. Later I will use 
+        react component (Although I minimize the request using sessionStorage). 
+      -->
+      <!-- <Video client:load ytApiKey={ytApiKey} ytChannelId={ytChannelId} /> -->
       <Video />
       <Contact />
+      <Footer />
     </main>
   </body>
   <script src='../../node_modules/preline/dist/preline.js'></script>

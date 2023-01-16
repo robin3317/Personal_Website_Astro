@@ -8,29 +8,43 @@ const response = await fetch(
 const videos = await response.json()
 ---
 
-<div
-  class='max-w-[85rem] px-4 py-10 sm:px-20 lg:px-40 lg:py-14 mx-auto'
-  id='video'
->
-  <h1 class='mb-12 font-bold text-3xl'>
+<div class='max-w-[85rem] px-4 pt-32 sm:px-20 lg:px-40 mx-auto' id='video'>
+  <h1 class={`mb-12 font-bold text-3xl ${!videos?.items && 'text-center'}`}>
     04. Some latest videos from my YoutTube channel
   </h1>
 
-  <!-- Grid -->
-  <div class='grid lg:grid-cols-2 lg:gap-y-16 gap-10'>
-    {
-      videos?.items?.map((video) => (
-        <div class='shadow-xl shadow-gray-200 rounded-xl p-4'>
-          <div class='aspect-w-16 aspect-h-9'>
-            <iframe
-              src={`https://youtube.com/embed/${video.id.videoId}`}
-              allowfullscreen
-              class='w-full h-full'
-            />
+  {
+    !!videos?.items ? (
+      <div class='grid lg:grid-cols-2 lg:gap-y-16 gap-10'>
+        {videos.items?.map((video) => (
+          <div class='shadow-xl shadow-gray-200 rounded-xl p-4'>
+            <div class='aspect-w-16 aspect-h-9'>
+              <iframe
+                src={`https://youtube.com/embed/${video.id.videoId}`}
+                allowfullscreen
+                class='w-full h-full'
+              />
+            </div>
           </div>
-        </div>
-      ))
-    }
-  </div>
-  <!-- End Grid -->
+        ))}
+      </div>
+    ) : (
+      <div class='flex justify-center'>
+        <p class='text-center max-w-lg text-gray-500'>
+          I'm using google free api quota, if you see this message that's mean -
+          The api request cannot be completed because of exceeding quota limit!
+          Or may be something wrong is happened. Sorry for this inconvinience!
+          But the good news is - you can checkout my channel
+          <a
+            type='button'
+            class='py-3 px-5 mt-5 inline-flex justify-center items-center gap-2 rounded-md border-2 border-gray-900 font-semibold text-gray-800 hover:text-white hover:bg-gray-800 hover:border-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 transition-all text-sm'
+            target='_blank'
+            href='https://youtube.com/@codeonces'
+          >
+            Checkout my channel!
+          </a>
+        </p>
+      </div>
+    )
+  }
 </div>
